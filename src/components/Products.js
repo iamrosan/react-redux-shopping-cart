@@ -1,41 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import {add} from '../store/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchProducts } from '../store/productSlice';
-// import { STATUSES } from '../store/productSlice';
+import { fetchProducts } from '../store/productSlice';
+import { STATUSES } from '../store/productSlice';
 
 
 const Products = () => {
 
     const dispatch = useDispatch();
 
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
 
-    // const {data:products, status} = useSelector((state)=>state.product)
+    const {data:products, status} = useSelector((state)=>state.product)
 
     useEffect(()=>{
-                // dispatch(fetchProducts())
-        const fetchProducts = async () =>{
-            const res = await fetch('https://fakestoreapi.com/products');
-            const data = await res.json();
-            console.log(data);
-            setProducts(data);
-            console.log('products:',products);
-        }
-        fetchProducts();
-    },[])
+                dispatch(fetchProducts())
+        // const fetchProducts = async () =>{
+        //     const res = await fetch('https://fakestoreapi.com/products');
+        //     const data = await res.json();
+        //     console.log(data);
+        //     setProducts(data);
+        //     console.log('products:',products);
+        // }
+        // fetchProducts();
+    },[dispatch])
     
     const addToCart = (product)=>{
         dispatch(add(product));
     }
 
-    // if (status===STATUSES.LOADING){
-    //     return <h5>LOADING !!!!!!!!</h5>
-    // }
+    if (status===STATUSES.LOADING){
+        return <h5>LOADING !!!!!!!!</h5>
+    }
 
-    // if (status===STATUSES.ERROR){
-    //     return <h5>ERROR OCCURED DURING THE PROCESS !!!!!!!!</h5>
-    // }
+    if (status===STATUSES.ERROR){
+        return <h5>ERROR OCCURED DURING THE PROCESS !!!!!!!!</h5>
+    }
     return (
 
         <>
